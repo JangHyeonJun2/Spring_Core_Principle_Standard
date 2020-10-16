@@ -1,17 +1,19 @@
 package hello.core;
 
-import hello.core.member.Grade;
-import hello.core.member.Member;
-import hello.core.member.MemberService;
-import hello.core.member.MemberServiceImpl;
+import hello.core.discount.FixDiscountPolicy;
+import hello.core.member.*;
 import hello.core.order.Order;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
 
 public class OrderApp {
     public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImpl();
-        OrderService orderService = new OrderServiceImpl();
+
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService();
+        OrderService orderService = appConfig.orderService();
+//        MemberService memberService = new MemberServiceImpl(memoryMemberRepository);
+//        OrderService orderService = new OrderServiceImpl(memoryMemberRepository,fixDiscountPolicy);
 
         Long memberId = 1L;
         Member member = new Member(memberId, "memberA", Grade.VIP);
