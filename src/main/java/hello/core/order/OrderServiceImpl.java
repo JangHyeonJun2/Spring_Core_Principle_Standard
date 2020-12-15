@@ -1,5 +1,6 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
@@ -24,14 +25,14 @@ public class OrderServiceImpl implements OrderService{
 
     /**
      * 현재 RateDiscountPolicy,FixDiscountPolicy 두 개를 @Componenet를 해놓았기 때문에 OrderServiceImpl.java 생성자 부분에서 discountPolicy에서 오류가 발생한다.
-     * 이 오류를 해결할 수 있는 방법은 3가지가 있습니다. 1.@AutoWired 필드 명 매  2.@Quilifier -> @Quilifier끼리 매칭 -> 빈 이름 매  3.Primary사용
+     * 이 오류를 해결할 수 있는 방법은 3가지가 있습니다. 1.@AutoWired 필드 명 매  2.@Quiifier -> @Quilifier끼리 매칭 -> 빈 이름 매  3.Primary사용
      * @param memberRepository
      * @param discountPolicy
      */
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy rateDiscountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
-        this.discountPolicy = rateDiscountPolicy;
+        this.discountPolicy = discountPolicy;
     }
 
     @Override
