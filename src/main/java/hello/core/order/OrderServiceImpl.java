@@ -13,18 +13,25 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-@RequiredArgsConstructor //롬복 라이브러리가 제공하는 @RequiredArgsConstructor 기능을 사용하면 final이 붙은 필드를 모아서 생성자를 자동으로 만들어준다. (다음 코드에는 보이지 않지만 실제 호출 가능하다.)
+//롬복 라이브러리가 제공하는 @RequiredArgsConstructor 기능을 사용하면 final이 붙은 필드를 모아서 생성자를 자동으로 만들어준다. (다음 코드에는 보이지 않지만 실제 호출 가능하다.)
+//@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
 
 
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
-//    @Autowired
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    /**
+     * 현재 RateDiscountPolicy,FixDiscountPolicy 두 개를 @Componenet를 해놓았기 때문에 OrderServiceImpl.java 생성자 부분에서 discountPolicy에서 오류가 발생한다.
+     * 이 오류를 해결할 수 있는 방법은 3가지가 있습니다. 1.@AutoWired 필드 명 매  2.@Quilifier -> @Quilifier끼리 매칭 -> 빈 이름 매  3.Primary사용
+     * @param memberRepository
+     * @param discountPolicy
+     */
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
